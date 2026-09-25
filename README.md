@@ -44,7 +44,7 @@ training — and neither connects to EU AI Act obligations.
 
 - **Maika Paetzold** ([mettage.com](https://mettage.com)) — concept,
   societal framing, communication
-- **[NexPatch](https://github.com/Franzelfx)** — development (ML/AI,
+- **Fabian Franz** ([github.com]https://github.com/Franzelfx)** — development (ML/AI,
   full-stack, DevOps), already focused on GDPR and EU AI Act compliance
 
 ## Proposed milestones (6 months, to be refined with NexPatch)
