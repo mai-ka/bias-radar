@@ -102,7 +102,7 @@ Für strukturierte Daten ist die Bias-Analyse deutlich ausgereifter als für Roh
 |---|---|---|---|---|---|
 | Ebene | Modell, Tabellen | Dokumentation | Rohtext-Korpus | Embeddings | Rohtext-Korpus |
 | Eingabe | strukturierte Daten mit Labels | Metadaten, Selbstauskunft | Textkorpus | vortrainiertes Embedding | Textkorpus (Text/CSV/JSON) |
-| Merkmale | geschützte Attribute (Spalten) | frei dokumentierbar | Geschlecht | u. a. Geschlecht, Herkunft, Religion (über Wortlisten) | Geschlecht, Herkunft, Hautfarbe, Religion |
+| Merkmale | geschützte Attribute (Spalten) | frei dokumentierbar | Geschlecht | u. a. Geschlecht, Herkunft, Religion (über Wortlisten) | Zunächst Geschlecht, danach geplant: Herkunft, Hautfarbe, Religion |
 | Methode | Gruppenmetriken, Mitigation | Label-Module | Ko-Okkurrenz | Assoziationstests (z. B. WEAT) | NER, Ko-Okkurrenz/PMI, Embedding-Test |
 | Ausgabe | Metriken, Mitigation | Label | Scores, Wortstatistik | Rankings, Plots | verständlicher Bericht (HTML/PDF) |
 | Lizenz | Apache 2.0 | nicht geprüft | MIT (laut PyPI) | nicht geprüft | FOSS (Lizenz noch festzulegen) |
@@ -118,7 +118,7 @@ Für strukturierte Daten ist die Bias-Analyse deutlich ausgereifter als für Roh
 
 **Was wir beitragen wollen (geplant, nicht bewiesen):**
 1. **Mehrere Verfahren in einem Lauf**, mit einem gemeinsamen Bericht statt einzelner Kennzahlen.
-2. **Mehr Merkmale als Geschlecht** (Herkunft, Hautfarbe, Religion), unter anderem über Namens- und Herkunftsbegriff-Erkennung (NER).
+2. **Schrittweise mehr Merkmale als Geschlecht** (geplant: Herkunft, Hautfarbe, Religion), unter anderem über Namens- und Herkunftsbegriff-Erkennung (NER).
 3. **Verständlichkeit für kleine und mittlere Teams ohne Fairness-Expertise**: Bericht mit Beispielstellen, nicht nur Scores.
 4. **Lokale Ausführung**: Korpora verlassen den Rechner der Nutzer:innen nicht (Datenschutz und Ressourcenschonung).
 5. **Bezug zu den Dokumentationspflichten für Trainingsdaten** nach Art. 10 der EU-KI-Verordnung. Dort sind Bias-Prüfung (Abs. 2 f) und geeignete Maßnahmen (Abs. 2 g) für Hochrisiko-Systeme verankert. BiasRadar ersetzt keine Konformitätsprüfung, sondern liefert ein Dokumentationsartefakt für die Prüfung.

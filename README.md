@@ -1,55 +1,66 @@
-# Bias Radar
+# BiasRadar
 
-*(working title, also "Fair Source")*
+A free tool that checks German-language text collections for bias before AI
+training, runs locally, and backs its findings with evidence passages.
 
-**An open-source tool that scans training corpora for representation bias
-*before* model training — proposed for [Prototype Fund](https://www.prototypefund.de/en)
-2026 (Software Infrastructure track).**
-
-> **Status: proposal / concept stage.** This repository documents the idea for
-> the funding application. Development has not started yet — there is no
-> working code here.
+**Status: concept stage.** There is no working code yet. This repository
+documents the idea, the planned approach and how it relates to existing tools.
 
 ## The problem
 
-AI systems are trained mostly on web crawls, Wikipedia, books, and code
-repositories. A 2024 UNESCO study found that these sources associate female
-names with family and home, male names with career and leadership. A UC
-Berkeley Haas study found gender bias in 44% of 133 AI systems studied. The
-issue isn't limited to gender — and it doesn't start with the finished model,
-it's already in the training data. Anyone training a model today has almost no
-accessible tool to check for this beforehand.
+Language models learn from text and inherit its biases. This starts in the
+training data, not in the finished model. Teams that fine-tune models or build
+their own corpora rarely have a fairness department, and there is hardly any
+accessible tool that checks raw text collections beforehand, especially for
+German.
 
 ## The approach
 
-An open-source tool (a library plus a simple interface) that scans text
-corpora or data sources for representation bias — e.g. gender, role
-assignment, origin — *before* training. Output: a readable bias report that
-shows where a data source is skewed, referencing the documentation
-obligations for training-data governance under the EU AI Act.
+- **Local:** your data never leaves your machine.
+- **Several established methods in one run:** named entity recognition,
+  co-occurrence and association measures with confidence intervals. We start
+  with gender and plan to extend to further dimensions such as origin, skin
+  colour and religion.
+- **Built for German:** grammatical gender, generic masculine and
+  gender-inclusive forms are taken into account.
+- **A report you can check:** HTML, PDF and JSON, with evidence passages and
+  reproducible settings (configuration, word list version, corpus checksum).
+- **Reference to Article 10 of the EU AI Act** (data and data governance).
+- **Python library, command line and a simple local web interface**, so people
+  without programming skills can use it too.
 
-**Target audience**: small and mid-sized teams that fine-tune models or run
-their own language models but have no dedicated fairness research team, plus
-NGOs and institutions (e.g. UN Women) that need a low-barrier review tool for
-partner projects.
+## Who it is for
 
-## How this differs from existing tools
+Teams that fine-tune language models or prepare their own corpora without a
+dedicated fairness team. NGOs, public bodies and equality offices that need to
+review partner projects or data sources. People responsible for documenting
+training data under the EU AI Act.
 
-IBM's [AI Fairness 360](https://ai-fairness-360.org/) and the
-[Data Nutrition Project](https://datanutrition.org/) mainly target finished
-models or structured/tabular datasets — not raw text/web corpora *before*
-training — and neither connects to EU AI Act obligations.
+## How it differs from existing tools
+
+See [benchmarking.md](benchmarking.md). The individual methods are not new.
+What is new is the combination: local, German-aware, one report with evidence.
+
+## Planned roadmap
+
+1. Word lists, reference corpora, evaluation design; core library
+2. Association metrics with confidence intervals; interface prototype
+3. Report module; interface implementation
+4. Evaluation with inserted bias and reference corpora, documentation,
+   release 0.1
 
 ## Team
 
-- **Maika Paetzold** ([mettage.com](https://mettage.com)) — concept,
-  societal framing, communication
-- **Fabian Franz** ([github.com]https://github.com/Franzelfx)** — development (ML/AI,
-  full-stack, DevOps), already focused on GDPR and EU AI Act compliance
+- **Maika Paetzold** ([mettage.com](https://mettage.com), [@mai-ka](https://github.com/mai-ka)):
+  concept, interface, user testing
+- **Fabian Franz** ([@Franzelfx](https://github.com/Franzelfx)):
+  technical implementation, architecture, evaluation
 
-## Proposed milestones (6 months, to be refined with NexPatch)
+## Contributing
 
-1. **Months 1–2**: define bias metrics, select test corpora
-2. **Months 2–4**: build the analysis engine and the report
-3. **Months 4–5**: test phase with real datasets and first external users
-4. **Months 5–6**: documentation, public repository, launch
+Pointers to tools we missed, word lists and bug reports are welcome. Please
+open an issue.
+
+## License
+
+To be decided.
