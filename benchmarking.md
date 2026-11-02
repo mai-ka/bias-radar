@@ -1,5 +1,6 @@
 # BiasRadar – Konkurrenz- und Kooperationsanalyse
 
+Stand: 7. Oktober 2026, ergänzt am 1. November 2026 (Data Measurements Tool) · Autor:innen: Maika Paetzold, Fabian Franz
 
 ## 1 Zweck, Methode und Grenzen
 
@@ -17,9 +18,9 @@ BiasRadar soll Textkorpora **vor dem Training** eines KI-Modells auf Verzerrunge
 | **Strukturierte Daten** | Sind Gruppen in einer Tabelle ungleich verteilt oder verknüpft? | AI Fairness 360 (Dataset-Metriken), Aequitas, Unsupervised Bias Detection Tool (siehe 3.8) |
 | **Dokumentation von Datensätzen** | Welche Eigenschaften, Risiken, Herkunft hat ein Datensatz? | Dataset Nutrition Label, Dataset Cards |
 | **Embeddings** | Enthält ein Embedding-Modell stereotype Assoziationen? | WEFE |
-| **Rohtext-Korpus** | Welche Gruppen kommen wie vor und mit welchen Wörtern? | GenBit, akademische Pipelines, BiasRadar |
+| **Rohtext-Korpus** | Welche Gruppen kommen wie vor und mit welchen Wörtern? | GenBit, Data Measurements Tool (Hugging Face), akademische Pipelines, BiasRadar |
 
-BiasRadar bewegt sich in der letzten Zeile. Dort ist die Auswahl an gepflegten, auffindbaren Werkzeugen deutlich dünner als in den anderen Zeilen. Dünn heißt aber nicht leer (siehe 3.3).
+BiasRadar bewegt sich in der letzten Zeile. Dort ist die Auswahl an gepflegten, auffindbaren Werkzeugen deutlich dünner als in den anderen Zeilen. Dünn heißt aber nicht leer (siehe 3.3 und 3.9).
 
 ## 3 Einzelanalysen
 
@@ -96,22 +97,30 @@ Für strukturierte Daten ist die Bias-Analyse deutlich ausgereifter als für Roh
 - Sie sind aber ein **methodisches Vorbild**: Die Kennzahlen (Raten je Gruppe, Verhältnisse, Repräsentation) lassen sich als Berichtsstruktur denken, die Fachleute aus der Tabellenwelt bereits kennen.
 - Das Unsupervised Bias Detection Tool zeigt, dass Bias-Suche auch ohne vorab definierte Gruppen publiziert und als Open Source verfügbar ist. Ob sich der Gedanke auf Text übertragen lässt, haben wir nicht geprüft.
 
+### 3.9 Data Measurements Tool (Hugging Face)
+
+**Was es ist.** Ein Werkzeug von Hugging Face zur Beschreibung und Analyse von Textdatensätzen, veröffentlicht als Hugging-Face-Space mit Python-Modulen. Den Gesamtumfang haben wir *nicht geprüft*; gesichtet haben wir nur das Modul `npmi.py` im Quellcode.
+
+**Wie es arbeitet.** Laut Quellcode zählt es für gewählte Identitätsbegriffe, mit welchen anderen Wörtern sie im Datensatz gemeinsam vorkommen, und berechnet daraus PMI und normalisierte PMI (nPMI). Für zwei Untergruppen bildet es einen Bias-Wert als Differenz der nPMI-Werte je gemeinsamem Wort. In einer von uns gesichteten Variante des Space stellt ein Widget diese Werte dar.
+
+**Verhältnis zu BiasRadar.** Nach GenBit die zweite inhaltliche Überschneidung mit unserem Ko-Okkurrenz-/PMI-Baustein. Das Prinzip ist auch hier **nicht neu**. Ob es deutsche Texte unterstützt, mehr als zwei Gruppen auswertet, einen Bericht erzeugt, lokal läuft und gepflegt wird, haben wir *nicht geprüft*. Die Lizenz ist ebenfalls *nicht geprüft*.
+
 ## 4 Vergleichsmatrix
 
-| | AIF360 | Dataset Nutrition Label | GenBit | WEFE | BiasRadar (geplant) |
-|---|---|---|---|---|---|
-| Ebene | Modell, Tabellen | Dokumentation | Rohtext-Korpus | Embeddings | Rohtext-Korpus |
-| Eingabe | strukturierte Daten mit Labels | Metadaten, Selbstauskunft | Textkorpus | vortrainiertes Embedding | Textkorpus (Text/CSV/JSON) |
-| Merkmale | geschützte Attribute (Spalten) | frei dokumentierbar | Geschlecht | u. a. Geschlecht, Herkunft, Religion (über Wortlisten) | Zunächst Geschlecht, danach geplant: Herkunft, Hautfarbe, Religion |
-| Methode | Gruppenmetriken, Mitigation | Label-Module | Ko-Okkurrenz | Assoziationstests (z. B. WEAT) | NER, Ko-Okkurrenz/PMI, Embedding-Test |
-| Ausgabe | Metriken, Mitigation | Label | Scores, Wortstatistik | Rankings, Plots | verständlicher Bericht (HTML/PDF) |
-| Lizenz | Apache 2.0 | nicht geprüft | MIT (laut PyPI) | nicht geprüft | FOSS (Lizenz noch festzulegen) |
-| Status | aktiv (nicht im Detail geprüft) | laut Verzeichnis aktiv | Repo archiviert (06/2026) | nicht geprüft | Prototyp im Förderzeitraum |
+| | AIF360 | Dataset Nutrition Label | GenBit | Data Measurements Tool | WEFE | BiasRadar (geplant) |
+|---|---|---|---|---|---|---|
+| Ebene | Modell, Tabellen | Dokumentation | Rohtext-Korpus | Rohtext-Korpus | Embeddings | Rohtext-Korpus |
+| Eingabe | strukturierte Daten mit Labels | Metadaten, Selbstauskunft | Textkorpus | Textdatensatz (Umfang nicht geprüft) | vortrainiertes Embedding | Textkorpus (Text/CSV/JSON) |
+| Merkmale | geschützte Attribute (Spalten) | frei dokumentierbar | Geschlecht | frei wählbare Identitätsbegriffe (laut Code) | u. a. Geschlecht, Herkunft, Religion (über Wortlisten) | Zunächst Geschlecht, danach geplant: Herkunft, Hautfarbe, Religion |
+| Methode | Gruppenmetriken, Mitigation | Label-Module | Ko-Okkurrenz | Ko-Okkurrenz (nPMI) | Assoziationstests (z. B. WEAT) | NER, Ko-Okkurrenz/PMI, Embedding-Test |
+| Ausgabe | Metriken, Mitigation | Label | Scores, Wortstatistik | nPMI-Werte im Widget (laut Code) | Rankings, Plots | verständlicher Bericht (HTML/PDF) |
+| Lizenz | Apache 2.0 | nicht geprüft | MIT (laut PyPI) | nicht geprüft | nicht geprüft | FOSS (Lizenz noch festzulegen) |
+| Status | aktiv (nicht im Detail geprüft) | laut Verzeichnis aktiv | Repo archiviert (06/2026) | nicht geprüft | nicht geprüft | Prototyp im Förderzeitraum |
 
 ## 5 Unsere Abgrenzung
 
 **Was nicht neu ist, und wir auch nicht so verkaufen:**
-- Ko-Okkurrenz-Analyse auf Korpusebene gegen Gruppenwörter (GenBit).
+- Ko-Okkurrenz-Analyse auf Korpusebene gegen Gruppenwörter (GenBit, Data Measurements Tool von Hugging Face).
 - Assoziationstests auf Embeddings (WEFE).
 - Die Idee, Datensätze standardisiert zu dokumentieren (Dataset Nutrition Label, Dataset Cards).
 - Akademische Pipelines für Schutzmerkmals-Erkennung in großen Textkorpora (arXiv 2504.14212).
@@ -134,6 +143,7 @@ Für strukturierte Daten ist die Bias-Analyse deutlich ausgereifter als für Roh
 | Data Nutrition Project | Dokumentationsstandard | BiasRadar-Ergebnisse (Subpopulationen, Risiken) als Beitrag zu einem Label | Schema/Export des Labels *nicht geprüft*; Kontaktaufnahme nötig |
 | WEFE (Universidad de Chile) | Bibliothek | Nutzung als Abhängigkeit; Rückmeldungen und Beiträge an das Projekt | Lizenz und Pflegestatus prüfen |
 | GenBit (Microsoft) | Bibliothek, archiviert | Vergleichsmessungen als Plausibilitätscheck; Wiederverwendung von Konzepten und ggf. Wortlisten | MIT laut PyPI; Lizenz der Wortlisten und Fork-Option prüfen |
+| Hugging Face Data Measurements Tool | Werkzeug (Space, Pflegestatus ungeprüft) | Vergleichsmessung als Plausibilitätscheck für unseren Ko-Okkurrenz-Baustein | Lizenz, Pflegestatus und Sprachumfang prüfen |
 | Hugging Face Dataset Cards | Dokumentationsformat | Bericht-Export als Abschnitt einer Dataset Card | Format ist offen dokumentiert; konkrete Umsetzung offen |
 | AI Fairness 360 | Bibliothek | Konzeptionelles Vorbild für Metrik-Erklärungen; keine direkte Anbindung an Text erkannt | – |
 
@@ -141,10 +151,10 @@ Kooperationen mit Praxispartnern aus der Zivilgesellschaft sind **nicht Gegensta
 
 ## 7 Offene Fragen und Risiken
 
-1. **Überschneidung mit GenBit.** Wenn unser Kern-Baustein methodisch GenBit ähnelt, muss die Entscheidung „Fork, Teilübernahme oder Eigenentwicklung" begründet sein. Archiviert heißt nicht automatisch ungeeignet; es heißt, dass niemand mehr Fehler behebt.
+1. **Überschneidung mit GenBit und dem Data Measurements Tool.** Wenn unser Kern-Baustein methodisch GenBit und der nPMI-Analyse des Data Measurements Tools ähnelt, muss die Entscheidung „Fork, Teilübernahme oder Eigenentwicklung" begründet sein. Archiviert heißt nicht automatisch ungeeignet; es heißt, dass niemand mehr Fehler behebt.
 2. **Zuverlässigkeit.** Wortlistenbasierte und NER-basierte Verfahren können Gruppenbezüge übersehen oder falsch zuordnen (Mehrdeutigkeit, Eigennamen, Sprache). Das ist unsere Einschätzung; es braucht eine Messung im Projekt, nicht nur eine Behauptung.
 3. **Sprachabdeckung.** GenBit bietet Deutsch nur binär. **[OFFEN: Welche Sprachen decken wir im Prototyp ab?]**
-4. **Ungeprüfte Punkte:** Schema/Export des Dataset Nutrition Labels; Code und Lizenz der akademischen Pipeline (arXiv 2504.14212); Status und Umfang von BiasAware; Lizenzen von WEFE und der GenBit-Wortlisten; aktueller Pflegestand von AIF360.
+4. **Ungeprüfte Punkte:** Umfang, Lizenz, Pflegestand und Sprachunterstützung des Data Measurements Tools; Schema/Export des Dataset Nutrition Labels; Code und Lizenz der akademischen Pipeline (arXiv 2504.14212); Status und Umfang von BiasAware; Lizenzen von WEFE und der GenBit-Wortlisten; aktueller Pflegestand von AIF360.
 5. **Regulatorischer Zeitplan.** Zu den Anwendungsterminen der Pflichten aus Art. 10 gibt es abweichende Angaben in Sekundärquellen. Vor jeder Aussage dazu im Antrag ist die amtliche Quelle zu prüfen.
 
 ## 8 Quellen (Abruf: Oktober 2026)
@@ -165,4 +175,5 @@ Kooperationen mit Praxispartnern aus der Zivilgesellschaft sind **nicht Gegensta
 - Auditing a Dutch Public Sector Risk Profiling Algorithm Using an Unsupervised Bias Detection Tool: https://arxiv.org/pdf/2502.01713
 - Hugging Face, Landscape of ML Documentation Tools: https://huggingface.co/docs/hub/model-card-landscape-analysis
 - BiasAware (Quellcode des Space): https://huggingface.co/spaces/avid-ml/biasaware/blob/1dc0d8b744687508587281bec43664e5d8cfdde2/app.py
+- Hugging Face Data Measurements Tool (nPMI-Modul): https://www.huggingface.co/spaces/huggingface/data-measurements-tool/blob/main/data_measurements/npmi.py
 - EU-KI-Verordnung, Art. 10: https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-10
