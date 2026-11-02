@@ -88,4 +88,7 @@ open an issue.
 
 ## License
 
-To be decided.
+© 2026 Maika Paetzold, Fabian Franz. All rights reserved.
+
+This repository describes a concept. No licence is granted at this stage.
+We plan to publish the software under a free licence once development starts.
