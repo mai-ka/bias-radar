@@ -62,8 +62,8 @@ training data under the EU AI Act.
 
 ## How it differs from existing tools
 
-See [benchmarking.md](benchmarking.md). The individual methods are not new.
-What is new is the combination: local, German-aware, one report with evidence.
+The individual methods are not new. What is new is the combination: local,
+German-aware, one report with evidence.
 
 ## Planned roadmap
 
@@ -83,8 +83,7 @@ What is new is the combination: local, German-aware, one report with evidence.
 
 ## Contributing
 
-Pointers to tools we missed, word lists and bug reports are welcome. Please
-open an issue.
+Feedback and pointers to tools we missed are welcome. Please open an issue.
 
 ## License
 
