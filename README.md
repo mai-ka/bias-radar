@@ -1,10 +1,20 @@
-# BiasRadar
+<h1 align="center">BiasRadar</h1>
 
+<p align="center">
 A free tool that checks German-language text collections for bias before AI
-training, runs locally, and backs its findings with evidence passages.
+training. Runs locally and backs its findings with evidence passages.
+</p>
 
-**Status: concept stage.** There is no working code yet. This repository
-documents the idea, the planned approach and how it relates to existing tools.
+<p align="center">
+  <img src="https://img.shields.io/badge/status-concept_stage-417299?style=flat-square" alt="Status: concept stage">
+  <img src="https://img.shields.io/badge/language-German-417299?style=flat-square" alt="Language: German">
+  <img src="https://img.shields.io/badge/license-to_be_decided-68849b?style=flat-square" alt="License: to be decided">
+</p>
+
+> There is no working code yet. This repository documents the idea, the
+> planned approach and how it relates to existing tools.
+
+---
 
 ## The problem
 
@@ -13,6 +23,20 @@ training data, not in the finished model. Teams that fine-tune models or build
 their own corpora rarely have a fairness department, and there is hardly any
 accessible tool that checks raw text collections beforehand, especially for
 German.
+
+## How it will work
+
+```mermaid
+flowchart LR
+    A[Text collection] --> B[Local analysis]
+    B --> C[Report with evidence passages]
+```
+
+1. You point BiasRadar at a text collection on your own machine.
+2. It recognises names and terms, measures how groups are mentioned and with
+   which words, and gives each result a confidence interval.
+3. It writes a report you can check: HTML, PDF and JSON, with the passages
+   behind every finding.
 
 ## The approach
 
@@ -23,8 +47,8 @@ German.
   colour and religion.
 - **Built for German:** grammatical gender, generic masculine and
   gender-inclusive forms are taken into account.
-- **A report you can check:** HTML, PDF and JSON, with evidence passages and
-  reproducible settings (configuration, word list version, corpus checksum).
+- **Reproducible:** reports record configuration, word list version and corpus
+  checksum.
 - **Reference to Article 10 of the EU AI Act** (data and data governance).
 - **Python library, command line and a simple local web interface**, so people
   without programming skills can use it too.
@@ -43,11 +67,12 @@ What is new is the combination: local, German-aware, one report with evidence.
 
 ## Planned roadmap
 
-1. Word lists, reference corpora, evaluation design; core library
-2. Association metrics with confidence intervals; interface prototype
-3. Report module; interface implementation
-4. Evaluation with inserted bias and reference corpora, documentation,
-   release 0.1
+| Step | Focus |
+|---|---|
+| 1 | Word lists, reference corpora, evaluation design; core library |
+| 2 | Association metrics with confidence intervals; interface prototype |
+| 3 | Report module; interface implementation |
+| 4 | Evaluation with inserted bias and reference corpora, documentation, release 0.1 |
 
 ## Team
 
